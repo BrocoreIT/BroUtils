@@ -37,9 +37,9 @@ public static class GKUtils
 
 
 	public static void Log(string tag, string message)
-    {
+	{
 		Debug.Log($"<<{tag}>> {message}");
-    }
+	}
 
 	public static List<T> Swap<T>(this List<T> list, int indexA, int indexB)
 	{
@@ -2934,19 +2934,19 @@ public class DataBank<Key,T>
 	public CustomList<Key, T> DataList;
 	public Key currentKey;
 	public T currentData;
-    public T GetGetCurrentData()
-    {
-        return DataList.Get(currentKey);
-    }
+	public T GetGetCurrentData()
+	{
+		return DataList.Get(currentKey);
+	}
 	public void SetCurrentData(Key key)
 	{
 		currentKey = key;
 		SetCurrentData();
 	}
 	public void SetCurrentData()
-    {
+	{
 		currentData = DataList.Get(currentKey);
-    }
+	}
 }
 
 [System.Serializable]
@@ -2984,20 +2984,20 @@ public class CustomList<Key, T>
 	}
 
 	public void MoveUp(int index)
-    {
+	{
 		if(index != 0)
-        {
+		{
 			List.Swap(index, index - 1);
-        }
+		}
 		
-    }
+	}
 	public void MoveDown(int index)
-    {
+	{
 		if(index != List.Count -1)
-        {
+		{
 			List.Swap(index, index + 1);
-        }
-    }
+		}
+	}
 	public List<T> ToList()
 	{
 		List<T> list = new List<T>();
