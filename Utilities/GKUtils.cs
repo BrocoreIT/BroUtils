@@ -32,7 +32,6 @@ public static class GKUtils
 	public static void Log(string tag, string tag2, string message)
 	{
 		Log(tag, $"<{tag2}> {message}");
-		Debug.Log($"<<{tag}>> {message}");
 	}
 
 
