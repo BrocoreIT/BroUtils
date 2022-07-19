@@ -182,7 +182,16 @@ public static class GKUtils
 	}
 
 
-
+	public static List<string> ShuffleString(this string str)
+    {
+		List<string> newString =  new List<string>();
+		foreach(var s in str)
+        {
+			newString.Add(s.ToString());
+        }
+		newString.Shuffle();
+		return newString;
+	}
 	public static void Shuffle<T>(this List<T> list)
 	{
 
@@ -199,16 +208,11 @@ public static class GKUtils
 
 	public static List<T> GetShuffled<T>(this List<T> list)
 	{
-		var newList = new List<T>(list.Count);
+		var newList = new List<T>();
+		foreach (var item in list) 
+			newList.Add(item);
 
-		int n = list.Count;
-		while (n > 1)
-		{
-			n--;
-			int k = rng.Next(n);
-			newList[k] = list[n];
-			newList[n] = list[k];
-		}
+		newList.Shuffle();
 		return newList;
 
 	}
@@ -2957,6 +2961,8 @@ public class CustomList<Key, T>
 
 	public int Count => List.Count;
 
+	public Key LastKey => List[Count - 1].key;
+
 	public void Clear() => List.Clear();
 
 	public void New() => List = new List<CustomListObj<Key, T>>();
@@ -3008,7 +3014,19 @@ public class CustomList<Key, T>
 		return list;
 
 	}
-
+	public CustomListObj<Key, T> GetData(Key key)
+	{
+		CustomListObj<Key, T> anim = null;
+		try
+		{
+			anim = List.SingleOrDefault(x => x.key.Equals(key));
+			return anim;
+		}
+		catch
+		{
+			return default;
+		}
+	}
 
 	public T Get(Key key)
 	{

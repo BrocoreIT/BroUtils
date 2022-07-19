@@ -15,4 +15,13 @@ public class DataManager : Singleton<DataManager>
     private ProcessorBank processorBank;
 
     public static ProcessorBank ProcessorBank => Instance.processorBank;
+
+
+    public static BingoData BingoData => ProcessorBank.CurrentModule.BingoData;
+
+
+
+
+
+
 }
