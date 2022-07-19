@@ -11,6 +11,7 @@ using UnityEngine;
 
 public class DataManager : Singleton<DataManager>
 {
+<<<<<<< HEAD
     [SerializeField]
     private ProcessorBank processorBank;
 
@@ -24,4 +25,7 @@ public class DataManager : Singleton<DataManager>
 
 
 
+=======
+   
+>>>>>>> c26b8242fc9839e33fd40149cee1e633e895f015
 }
