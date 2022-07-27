@@ -5,7 +5,7 @@ using UnityEngine;
 /// Base singelton class.
 /// with option (DoNotDestroy, can be set in inspector) to make it persistant using DontDestroyOnLoad
 /// </summary>
-public class Singleton<T> : MonoBehaviour where T : Component
+public class Singleton<T> : GkMono where T : Component
 {
     public bool DoNotDestroy;
     private static T instance;

@@ -83,7 +83,9 @@ public class GkGrid : MonoBehaviour
             {
                 if(Grid.Width != GridDimentions.width || Grid.Height != GridDimentions.height || cellSize != Grid.CellSize || Grid.GridDimentions.x != GridDimentions.x || Grid.GridDimentions.y != GridDimentions.y || origin.x != GridDimentions.x || origin.y != GridDimentions.y)
                     Grid.SetGridDimentions(GridDimentions.width, GridDimentions.height, cellSize, Origin);
+#if UNITY_EDITOR
                 Grid.DrawEditorGizmos();
+#endif
             }
             
         }
@@ -91,9 +93,11 @@ public class GkGrid : MonoBehaviour
         {
             if (Grid != null)
             {
+#if UNITY_EDITOR
                 Grid.DrawEditorGizmos();
+#endif
             }
-           
+
         }
        
     }

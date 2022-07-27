@@ -6,7 +6,10 @@ using UnityEditor;
 #endif
 public class GkMono : MonoBehaviour
 {
-
+    public void Log(string message)
+    {
+        GKUtils.Log(gameObject.name, message);
+    }
     public void SetList(List<GameObject> gameObjects, bool value)
     {
         foreach (var item in gameObjects)
@@ -14,6 +17,8 @@ public class GkMono : MonoBehaviour
             item.SetActive(value);
         }
     }
+
+#if UNITY_EDITOR
     protected void DrawGizmoLables(string message)
     {
         DrawGizmoLables(message, transform.position);
@@ -51,4 +56,6 @@ public class GkMono : MonoBehaviour
         var p2 = endPosition;
         Handles.DrawBezier(p1, p2, p1, p2, color, null, thickness);
     }
+
+#endif
 }

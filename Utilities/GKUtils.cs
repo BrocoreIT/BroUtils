@@ -863,7 +863,7 @@ public static class GKUtils
 			return false;
 		}
 	}
-
+#endif
 
 	private static readonly Vector3 Vector3zero = Vector3.zero;
 	private static readonly Vector3 Vector3one = Vector3.one;
@@ -2678,7 +2678,6 @@ public static class GKUtils
 
 
 
-#endif
 }
 
 public class Colors
@@ -2937,7 +2936,7 @@ public class DataBank<Key,T>
 	public CustomList<Key, T> DataList;
 	public Key currentKey;
 	public T currentData;
-	public T GetGetCurrentData()
+	public T GetCurrentData()
 	{
 		return DataList.Get(currentKey);
 	}

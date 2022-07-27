@@ -11,21 +11,9 @@ using UnityEngine;
 
 public class DataManager : Singleton<DataManager>
 {
-<<<<<<< HEAD
     [SerializeField]
-    private ProcessorBank processorBank;
+    private GameData gameData;
+    public static GameData GameData => Instance.gameData;
 
-    public static ProcessorBank ProcessorBank => Instance.processorBank;
-
-
-    public static BingoData BingoData => ProcessorBank.CurrentModule.BingoData;
-
-
-
-
-
-
-=======
-   
->>>>>>> c26b8242fc9839e33fd40149cee1e633e895f015
+    public static bool HasLights => GameData.HasLight;
 }

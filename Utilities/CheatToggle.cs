@@ -20,24 +20,14 @@ public class CheatToggle : MonoBehaviour
         {
             case CheatCodes.SelectName:
               
-                var options = new List<TMPro.TMP_Dropdown.OptionData>();
-                foreach(var item in DataManager.BingoData.GameData.List)
-                {
-                    var option = new TMPro.TMP_Dropdown.OptionData();
-                    option.text = item.key;
-                    options.Add(option);
-                }
-                dropdown.AddOptions(options);
                 break;
             case CheatCodes.SelectRegion:
-                var options2 = new List<TMPro.TMP_Dropdown.OptionData>();
-                Type enumType2 = typeof(Region);
-                SetEnumToDropdown<Region>(options2, enumType2);
+               
                 break;
             case CheatCodes.SelectCard:
-                var options3 = new List<TMPro.TMP_Dropdown.OptionData>();
+              /*  var options3 = new List<TMPro.TMP_Dropdown.OptionData>();
                 Type enumType3 = typeof(BingoGames);
-                SetEnumToDropdown<BingoGames>(options3, enumType3);
+                SetEnumToDropdown<BingoGames>(options3, enumType3);*/
                 break;
         }
        
@@ -61,6 +51,6 @@ public class CheatToggle : MonoBehaviour
     }
     public void OnValueChange()
     {
-        GameHandler.UpdateCheat(CheatCodes, Toggle.isOn, Param);
+        //GameHandlerBase.Instance.UpdateCheat(CheatCodes, Toggle.isOn, Param);
     }
 }

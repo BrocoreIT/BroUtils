@@ -10,10 +10,19 @@ public class GameData : ScriptableObject
     public bool isGamePlaying;
 
     public bool isDebug;
+    [SerializeField]
+    private bool hasLight;
 
+    public CustomList<ColorType, ColorData> Colors;
 
+    public bool HasLight { get => hasLight; set => hasLight = value; }
 }
-
+[System.Serializable]
+public struct ColorData
+{
+    public Color lightColor;
+    public Color objColor;
+}
 
 
 [System.Serializable]
