@@ -1,4 +1,5 @@
-/*using System.Collections;
+#if UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -75,11 +76,11 @@ namespace Helpers
 			{
 				resourcesDirName = "";
 			}
-			else if (assetPath.Contains(s_Resources)|| assetPath.Contains( "Resources"))
+			else if (assetPath.Contains(s_Resources) || assetPath.Contains("Resources"))
 			{
-			   
+
 				n = dirName.IndexOf(s_Resources);
-			   
+
 				if (n >= 0)
 				{
 					resourcesDirName = dirName.Substring(n + s_Resources.Length + 1) + "/";
@@ -108,7 +109,7 @@ namespace Helpers
 			}
 		}
 
-	   
+
 
 		private static bool isValid(string str)
 		{
@@ -128,12 +129,12 @@ namespace Helpers
 			// this presumes you can get away with just the final name in the type,
 			// e.g., you can use Material instead of UnityEngine.Material.
 			int n = typeString.LastIndexOf('.');
-		  
+
 
 			//        Debug.Log( "typeString:" + typeString);
 
 			var assetPath = AssetDatabase.GetAssetOrScenePath(o);
-		
+
 			var dirName = System.IO.Path.GetDirectoryName(assetPath);
 
 			string resourcesDirName = null;
@@ -158,7 +159,7 @@ namespace Helpers
 			}
 			if (resourcesDirName != null)
 			{
-		   
+
 				path = resourcesDirName + o.name;
 			}
 			else
@@ -172,14 +173,14 @@ namespace Helpers
 
 		public static string GetFileName(Object _object)
 		{
-		  
+
 			Object o = _object;
 
 			var assetPath = AssetDatabase.GetAssetOrScenePath(o);
-		
+
 			var dirName = System.IO.Path.GetFileNameWithoutExtension(assetPath);
 
-		  
+
 			return dirName;
 
 		}
@@ -193,14 +194,14 @@ namespace Helpers
 
 			var dirName = System.IO.Path.GetFileNameWithoutExtension(assetPath);
 
-			if(dirName.Contains("dummy"))
+			if (dirName.Contains("dummy"))
 			{
-			   
+
 				dirName = dirName.Replace("dummy", "td");
 			}
 			else
-			{ 
-				dirName = "Car" + cont; 
+			{
+				dirName = "Car" + cont;
 			}
 
 			return dirName;
@@ -452,16 +453,16 @@ namespace Helpers
 		[MenuItem("Assets/RemoveAsset")]
 		public static void RemoveAsset(Object Object = null)
 		{
-		  if(Object== null)
+			if (Object == null)
 			{
 				Object = Selection.activeObject;
 			}
 			AssetDatabase.RemoveObjectFromAsset(Object);
-		  
+
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 			EditorUtility.FocusProjectWindow();
-	  
+
 		}
 
 
@@ -497,4 +498,5 @@ public class SpriteImporter : AssetPostprocessor // AssetPostprocessor gives us 
 
 
 
-*/
+
+#endif

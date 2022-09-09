@@ -19,7 +19,68 @@ using UnityEngine.UI;
 
 
 public static class GKUtils
-{
+{ 
+	public static Vector3 GetRandomPointBetweenSpheres(this Vector3 origin, float sphereInnerRadius, float sphereOuterRadius)
+    {
+		Vector3 point = Vector3.zero;
+		var diff= sphereOuterRadius - sphereInnerRadius;
+		while (point == Vector3.zero) 
+			point = UnityEngine.Random.insideUnitSphere;
+		point = point.normalized * (UnityEngine.Random.value * diff + sphereInnerRadius);
+		point += origin;
+		return point;
+	}
+	public static Vector3 DirectionBetweenPoints(this Transform Origin, Transform Destination)
+    {
+		Vector3 posA = Origin.position;
+		Vector3 posB = Destination.position;
+		//Destination - Origin
+		return (posB - posA).normalized;
+	}
+	public static Vector3 RandomPointInAnnulus(this Vector3 origin, float minRadius, float maxRadius)
+	{
+		var randPoint = UnityEngine.Random.insideUnitCircle;
+
+		Vector2 newPos = new Vector2(origin.x, origin.z);
+		var randomDirection = (newPos * randPoint).normalized;
+
+		var randomDistance = UnityEngine.Random.Range(minRadius, maxRadius);
+
+		var point = newPos + randomDirection * randomDistance;
+
+		var outPoint = new Vector3(point.x, origin.y, point.y);
+		return outPoint;
+	}
+
+	public static Vector2 RandomPointInAnnulus(this Vector2 origin, float minRadius, float maxRadius)
+	{
+
+		var randomDirection = (UnityEngine.Random.insideUnitCircle * origin).normalized;
+
+		var randomDistance = UnityEngine.Random.Range(minRadius, maxRadius);
+
+		var point = origin + randomDirection * randomDistance;
+
+		return point;
+	}
+	public static Transform GetClosest(this Transform transform, IEnumerable<Transform> list)
+	{
+		Transform bestTarget = null;
+		float closestDistanceSqr = Mathf.Infinity;
+		Vector3 currentPosition = transform.position;
+		foreach (Transform potentialTarget in list)
+		{
+			Vector3 directionToTarget = potentialTarget.position - currentPosition;
+			float dSqrToTarget = directionToTarget.sqrMagnitude;
+			if (dSqrToTarget < closestDistanceSqr)
+			{
+				closestDistanceSqr = dSqrToTarget;
+				bestTarget = potentialTarget;
+			}
+		}
+
+		return bestTarget;
+	}
 
 	public static string RemoveWhitespace(this string input)
 	{

@@ -13,7 +13,7 @@ public class GameData : ScriptableObject
     [SerializeField]
     private bool hasLight;
 
-    public CustomList<ColorType, ColorData> Colors;
+    //public CustomList<ColorType, ColorData> Colors;
 
     public bool HasLight { get => hasLight; set => hasLight = value; }
 }
