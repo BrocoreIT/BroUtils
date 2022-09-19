@@ -123,10 +123,17 @@ public class GKGridObject<T>
             }
         }
     }
-
+    public Vector3 GetWorldPos(Vector2Int vector2Int)
+    {
+        return new Vector3(vector2Int.x, vector2Int.y) * CellSize + Origin;
+    }
     public Vector3 GetWorldPos(int x, int y)
     {
         return new Vector3(x, y) * CellSize  + Origin;
+    }
+    public Vector3 GetWorldPosOffset(Vector2Int vector2Int)
+    {
+        return (new Vector3(vector2Int.x, vector2Int.y) * CellSize) + (new Vector3(CellSize, CellSize) * 0.5f) + Origin;
     }
     public Vector3 GetWorldPosOffset(int x, int y)
     {
@@ -143,7 +150,48 @@ public class GKGridObject<T>
         return v2;
 
     }
+    public Vector2Int GetRandGridPosFixedY(int y)
+    {
+        var randX = UnityEngine.Random.Range(0, Width);
 
+        return new Vector2Int(randX, y);
+    }
+
+    public Vector2Int GetRandGridPosFixedX(int x)
+    {
+        var randY = UnityEngine.Random.Range(0, Height);
+
+        return new Vector2Int(x, randY);
+    }
+
+    public Vector2Int GetRandGridPos()
+    {
+        var randY = UnityEngine.Random.Range(0, Height);
+        var randX = UnityEngine.Random.Range(0, Width);
+
+        return new Vector2Int(randX, randY);
+    }
+
+    public Vector3 GetRandomWorldPosFixedX(int x)
+    {
+        var randY = UnityEngine.Random.Range(0, Height);
+
+        return GetWorldPosOffset(x, randY);
+    }
+    public Vector3 GetRandomWorldPosFixedY(int y)
+    {
+        var randX = UnityEngine.Random.Range(0, Width);
+
+        return GetWorldPosOffset(randX, y);
+    }
+
+    public Vector3 GetRandomWorldPos()
+    {
+        var randX = UnityEngine.Random.Range(0, Width);
+        var randY = UnityEngine.Random.Range(0, Height);
+
+        return GetWorldPosOffset(randX, randY);
+    }
     private void DrawGizmo()
     {
         if (!inGameDebug)

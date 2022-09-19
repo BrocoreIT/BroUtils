@@ -13,6 +13,7 @@ using System;
 using System.Reflection;
 using Object = UnityEngine.Object;
 using Path = System.IO.Path;
+using UnityEngine.UI;
 
 /// <summary>
 /// Written by GK. 
@@ -24,7 +25,55 @@ namespace Helpers
 {
 	public static class ProjectPathHelper
 	{
+		[MenuItem("tools/Convert scene text to tmp")]
+		public static void ConvertToTmp()
+		{
+			var texts = GetAllObjectsOnlyInScene<Text>();
+			foreach (var text in texts)
+			{
 
+				var textGo = text.gameObject;
+				var content = text.text;
+				GameObject.DestroyImmediate(text);
+				if(text == null)
+                {
+					var tmpText = textGo.AddComponent<TMPro.TextMeshProUGUI>();
+					tmpText.text = content;
+					tmpText.autoSizeTextContainer = true;
+					tmpText.alignment = TMPro.TextAlignmentOptions.Center;
+					tmpText.color = Colors.BlueViolet;
+
+				}
+				
+			}
+		}
+		[MenuItem("Tools/AdustTmp")]
+		public static void AdustTmp()
+		{
+			var texts = GetAllObjectsOnlyInScene<TMPro.TextMeshProUGUI>();
+			foreach (var text in texts)
+			{
+
+				text.autoSizeTextContainer = true;
+				text.alignment = TMPro.TextAlignmentOptions.Center;
+				text.color = Colors.BlueViolet;
+
+				
+
+			}
+		}
+		static List<T> GetAllObjectsOnlyInScene<T>() where T : MonoBehaviour
+		{
+			List<T> objectsInScene = new List<T>();
+
+			foreach (T go in Resources.FindObjectsOfTypeAll(typeof(T)) as T[])
+			{
+				if (!EditorUtility.IsPersistent(go.transform.root.gameObject) && !(go.hideFlags == HideFlags.NotEditable || go.hideFlags == HideFlags.HideAndDontSave))
+					objectsInScene.Add(go);
+			}
+
+			return objectsInScene;
+		}
 		[MenuItem("Play/Play Game %0")]
 		public static void PlayGame()
 		{
