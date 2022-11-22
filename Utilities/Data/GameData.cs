@@ -13,7 +13,9 @@ public class GameData : ScriptableObject
     [SerializeField]
     private bool hasLight;
 
-    //public CustomList<ColorType, ColorData> Colors;
+    public DataBank<int, GkCurve> levelCurves;
+
+    public bool isRestart;
 
     public bool HasLight { get => hasLight; set => hasLight = value; }
 }

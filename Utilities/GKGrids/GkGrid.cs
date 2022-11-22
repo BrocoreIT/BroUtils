@@ -29,11 +29,12 @@ public class GkGrid : MonoBehaviour
             return origin;
         }
     }
-    public GKGridObject<int> Grid;
+    public GKGridObject<ObsType> Grid;
 
     public bool UpdateGrid;
 
 
+    public int Size => GridDimentions.height * GridDimentions.width;
     public int startX, endX, startY, endY;
     private void Start()
     {
@@ -41,21 +42,18 @@ public class GkGrid : MonoBehaviour
     }
     public void CreateGrid()
     {
-        Grid = new GKGridObject<int>(GridDimentions.width, GridDimentions.height, cellSize, Origin, InitGrid);
+        Grid = new GKGridObject<ObsType>(GridDimentions.width, GridDimentions.height, cellSize, Origin, InitGrid);
     }
-    private int InitGrid()
+    private ObsType InitGrid()
     {
-        return 0;
+        return ObsType.None;
     }
 
     public Vector3 GetWorldPos(int x, int y) => Grid.GetWorldPosOffset(x, y);
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
-        {
-            Grid.SetValue(GKUtils.GetMouseWorldPosition(), 0);
-        }
+       
     }
     [ContextMenu("PrintLineX")]
     public void GetRangeX()
@@ -71,7 +69,7 @@ public class GkGrid : MonoBehaviour
         }
         Debug.Log(points);
     }
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         if(UpdateGrid)
         {

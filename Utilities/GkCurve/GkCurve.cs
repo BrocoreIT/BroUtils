@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [CreateAssetMenu(fileName="GkCurve",menuName="Data/GkCurves")]
@@ -47,39 +48,30 @@ public class GkCurve : ScriptableObject
             && gkCurve !=null 
             && gkCurve.length !=0)
         {
-            SetValues();
+            GetValues();
         }
     }
-    [ContextMenu("Set Values")]
-    public void SetValues()
+    [ContextMenu("Get Values")]
+    public void GetValues()
     {
         MinValue = gkCurve.keys[0].value;
-        MaxValue = gkCurve.keys[TotalValues].value;
+        MaxValue = MaxVal();
 
         MinTime = gkCurve.keys[0].time;
         MaxTime = gkCurve.keys[TotalValues].time;
     }
-    [ContextMenu("Set Player Values")]
-    public void SetPlayerValues()
+  
+
+
+    public float MaxVal()
     {
-        int val = -1;
-        gkCurve.keys = new Keyframe[(int)maxTime];
-        for (int i = 0; i < maxTime; i++)
+        var val = 0.0f;
+
+        foreach(var item in gkCurve.keys)
         {
-           
-            if(i%2==0)
-                val++;
-
-                gkCurve.AddKey(i, val);;
-                
-
-            
-        }/*
-        MinValue = gkCurve.keys[0].value;
-        MaxValue = gkCurve.keys[TotalValues].value;
-
-        MinTime = gkCurve.keys[0].time;
-        MaxTime = gkCurve.keys[TotalValues].time;*/
+            if(item.value> val) val = item.value;
+        }
+        return val;
     }
     public float interval;
     public float CheckOperator = 0;
@@ -105,16 +97,15 @@ public class GkCurve : ScriptableObject
             else
                 val += incementValOther;
 
-            Debug.Log($"{i} :: {val}");
-            if (true)
+         /*   if (true)
             {
                 val = val.Map(minTime,maxTime,0,maxTime + (maxTime * 25/100));
-            }
+            }*/
             var at = gkCurve.AddKey(i, val);
 
             
 
-            Debug.Log($"at {at} key is {i} :: val is {val}");
+            this.Log($"at index {at} : key is {i} :: val is {val}");
         }
     }
 
@@ -122,13 +113,26 @@ public class GkCurve : ScriptableObject
     [ContextMenu("Mutate")]
     public void Mutate()
     {
+        Keyframe[] keyframe = new Keyframe[gkCurve.length];
         for (int i = 0; i < gkCurve.length; i++)
         {
-            gkCurve.keys[i].time += mutateRange.GetRandom();
-            gkCurve.keys[i].value += mutateRange.GetRandom();
+            this.Log("b4 " + gkCurve.keys[i].time.ToString() + " :: " + (gkCurve.keys[i].time + mutateRange.GetRandom()));
+            keyframe[i].time = gkCurve.keys[i].time+ mutateRange.GetRandom();
+            keyframe[i].value = gkCurve.keys[i].value+ mutateRange.GetRandom();
+           
+        }
+        for (int i = 0; i < gkCurve.length; i++)
+        {
+            gkCurve.RemoveKey(i);
 
         }
-
+        gkCurve = new AnimationCurve();
+        for (int i = 0; i < keyframe.Length; i++)
+        {
+            gkCurve.AddKey(keyframe[i]);
+            this.Log("now " + gkCurve.keys[i].time.ToString());
+        }
+        this.Log("Values are mutated");
 
     }
 
@@ -137,13 +141,14 @@ public class GkCurve : ScriptableObject
     [ContextMenu("Readjust")]
     public void ReAdjust()
     {
-
+        GetValues();
         Keyframe[] keyframe = new Keyframe[gkCurve.length];
         for (int i = 0; i < gkCurve.length; i++)
         {
             keyframe[i].time = gkCurve.keys[i].time.Map(minTime, maxTime, timeR.x, timeR.y) ;
-            float v = gkCurve.keys[i].value.Map(minVal, maxValue, valueR.x, valueR.y);
-            Debug.Log(v);
+          
+            float v = gkCurve.keys[i].value.Map(MinValue, MaxValue, valueR.x, valueR.y);
+      
             keyframe[i].value = v;
 
         }
@@ -160,7 +165,8 @@ public class GkCurve : ScriptableObject
 
         }
 
-
+        GetValues();
+        this.Log("Values are readjusted");
     }
     public float GetMinTime()
     {
@@ -176,7 +182,11 @@ public class GkCurve : ScriptableObject
         var remapTime = time.Map(timeFromMin, timeFromMax, MinTime, MaxTime);
         Debug.Log($"remapTime {remapTime}");
         return gkCurve.Evaluate(remapTime).Map(minValue, maxValue, minTo, maxTo);
-    } 
-    
-    
+    }
+
+    public float Evaluate(float time)
+    {
+        return gkCurve.Evaluate(time);
+    }
+
 }

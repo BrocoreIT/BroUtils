@@ -48,27 +48,30 @@ public class GKGridObject<T>
         GridDimentions.x = originPos.x;
         GridDimentions.y = originPos.y;
 
-        Origin = new Vector3(originPos.x, originPos.y);
+        Origin = new Vector3(originPos.x,0, originPos.y);
     }
 
-    public void SetValue(Vector3 worldPos, T value)
+    public bool SetValue(Vector3 worldPos, T value)
     {
 
         var pos = GetGridPos(worldPos);
-        SetValue(pos.x, pos.y, value);
+        return SetValue(pos.x, pos.y, value);
     }
 
-    public void SetValue(int x, int y, T value)
+    public bool SetValue(int x, int y, T value)
     {
         //Log($"set value at {x},{y} : {value}");
         if (x >= 0 && y >= 0 && x < Width && y<Height)
         {
-            Log($"set value at {x},{y} : {value} :: x: { GetWorldPosOffset(x, y).x} y: { GetWorldPosOffset(x, y).y} ");
+            //Log($"set value at {x},{y} : {value} :: x: { GetWorldPosOffset(x, y).x} y: { GetWorldPosOffset(x, y).y} ");
            
             GridArray[x, y] = value;
             if(inGameDebug)
                 textMeshes[x, y].text = value.ToString();
+
+            return true;
         }
+        return false;
     }
     public T GetValue(Vector3 worldPos)
     {
@@ -87,6 +90,26 @@ public class GKGridObject<T>
         return default;
     }
 
+    public void SetValues(Func<T> value)
+    {
+        for (int x = 0; x < GridArray.GetLength(0); x++)
+        {
+            for (int y = 0; y < GridArray.GetLength(1); y++)
+            {
+                SetValue(x, y, value());
+            }
+        }
+    }
+    public void SetValues(T value)
+    {
+        for (int x = 0; x < GridArray.GetLength(0); x++)
+        {
+            for (int y = 0; y < GridArray.GetLength(1); y++)
+            {
+                SetValue(x, y, value);
+            }
+        }
+    }
     public void GetValues(System.Action<T> value)
     {
         for (int x = 0; x < GridArray.GetLength(0); x++)
@@ -107,7 +130,7 @@ public class GKGridObject<T>
             for (int y = 0; y < GridArray.GetLength(1); y++)
             {
                 var item = GridArray[x, y];
-                Log($"value at {x},{y} : {item}");
+                //Log($"value at {x},{y} : {item}");
                 value?.Invoke(item,x,y);
             }
         }
@@ -125,19 +148,19 @@ public class GKGridObject<T>
     }
     public Vector3 GetWorldPos(Vector2Int vector2Int)
     {
-        return new Vector3(vector2Int.x, vector2Int.y) * CellSize + Origin;
+        return new Vector3(vector2Int.x,0, vector2Int.y) * CellSize + Origin;
     }
     public Vector3 GetWorldPos(int x, int y)
     {
-        return new Vector3(x, y) * CellSize  + Origin;
+        return new Vector3(x,0, y) * CellSize  + Origin;
     }
     public Vector3 GetWorldPosOffset(Vector2Int vector2Int)
     {
-        return (new Vector3(vector2Int.x, vector2Int.y) * CellSize) + (new Vector3(CellSize, CellSize) * 0.5f) + Origin;
+        return (new Vector3(vector2Int.x,0, vector2Int.y) * CellSize) + (new Vector3(CellSize, 0,CellSize) * 0.5f) + Origin;
     }
     public Vector3 GetWorldPosOffset(int x, int y)
     {
-        return (new Vector3(x, y) * CellSize) + (new Vector3(CellSize,CellSize) * 0.5f) + Origin;
+        return (new Vector3(x,0, y) * CellSize) + (new Vector3(CellSize,0,CellSize) * 0.5f) + Origin;
     }
 
     public Vector2Int GetGridPos(Vector3 worldPos)
@@ -227,6 +250,8 @@ public class GKGridObject<T>
     {
         if (gridArray == null)
             GridArray = new T[Width, Height];
+
+        Gizmos.color = Colors.DarkRed;
         for (int x = 0; x < GridArray.GetLength(0); x++)
         {
 
@@ -241,12 +266,16 @@ public class GKGridObject<T>
                 style.fontStyle = FontStyle.Bold;
                 Handles.Label(pos, $"({x},{y})", style);
                 //GKUtils.CreateWorldText(Grid.GridArray[x, y].ToString(), null, Grid.GetWorldPosOffset(x, y), 20, Color.white, TextAnchor.MiddleCenter);
-                Gizmos.DrawLine(GetWorldPos(x, y), GetWorldPos(x, y + 1));
-                Gizmos.DrawLine(GetWorldPos(x, y), GetWorldPos(x + 1, y));
+                GetWorldPos(x, y).DrawLine(GetWorldPos(x, y + 1));
+                GetWorldPos(x, y).DrawLine(GetWorldPos(x + 1, y));
+                //Gizmos.DrawLine(GetWorldPos(x, y), GetWorldPos(x, y + 1));
+                //Gizmos.DrawLine(GetWorldPos(x, y), GetWorldPos(x + 1, y));
             }
         }
-        Gizmos.DrawLine(GetWorldPos(0, Height), GetWorldPos(Width, Height));
-        Gizmos.DrawLine(GetWorldPos(Width, 0), GetWorldPos(Width, Height));
+        GetWorldPos(0, Height).DrawLine(GetWorldPos(Width, Height));
+        GetWorldPos(Width, 0).DrawLine(GetWorldPos(Width, Height));
+        //Gizmos.DrawLine(GetWorldPos(0, Height), GetWorldPos(Width, Height));
+        //Gizmos.DrawLine(GetWorldPos(Width, 0), GetWorldPos(Width, Height));
     }
 #endif
 

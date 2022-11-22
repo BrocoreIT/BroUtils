@@ -12,13 +12,13 @@ public static class Storage
        }*/
     public static bool SetBool(string key, bool value)
     {
-        PlayerPrefs.SetString(key, value.ToString());
+        SetString(key, value.ToString());
         PlayerPrefs.Save();
         return value;
     }
     public static bool GetBool(string key, bool defaultValue = false)
     {
-        return bool.Parse(PlayerPrefs.GetString(key, defaultValue.ToString()));
+        return bool.Parse(GetString(key, defaultValue.ToString()));
     }
 
     public static float SetFloat(string key, float value)
