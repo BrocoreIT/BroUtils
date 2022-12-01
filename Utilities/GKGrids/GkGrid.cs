@@ -4,7 +4,7 @@ using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-public class GkGrid : MonoBehaviour
+public class GkGrid<T> : MonoBehaviour
 {
     public RectInt GridDimentions;
     public float cellSize;
@@ -29,7 +29,7 @@ public class GkGrid : MonoBehaviour
             return origin;
         }
     }
-    public GKGridObject<ObsType> Grid;
+    public GKGridObject<T> Grid;
 
     public bool UpdateGrid;
 
@@ -42,11 +42,11 @@ public class GkGrid : MonoBehaviour
     }
     public void CreateGrid()
     {
-        Grid = new GKGridObject<ObsType>(GridDimentions.width, GridDimentions.height, cellSize, Origin, InitGrid);
+        Grid = new GKGridObject<T>(GridDimentions.width, GridDimentions.height, cellSize, Origin, InitGrid);
     }
-    private ObsType InitGrid()
+    private T InitGrid()
     {
-        return ObsType.None;
+        return default(T);
     }
 
     public Vector3 GetWorldPos(int x, int y) => Grid.GetWorldPosOffset(x, y);
