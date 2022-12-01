@@ -80,7 +80,7 @@ public static class GizmoExtentions
         style.fontStyle = FontStyle.Bold;
         Handles.Label(theObject.transform.position, theObject.name, style);
     }
-#endif
+
     public static void DrawWireCube(this Transform transform)
     {
         DrawWireCube(transform, Colors.Red) ;
@@ -116,6 +116,6 @@ public static class GizmoExtentions
         var p2 = endPosition;
         Handles.DrawBezier(p1, p2, p1, p2, color, null, thickness);
     }
-
+#endif
 
 }
