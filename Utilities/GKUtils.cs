@@ -2998,10 +2998,11 @@ public class CustomList<Key, T>
         List.Add(newVal);
     }
 
-    public void Add(Key key, T value)
+    public CustomListObj<Key, T> Add(Key key, T value)
     {
         CustomListObj<Key, T> newVal = new CustomListObj<Key, T>(key, value);
         List.Add(newVal);
+        return newVal;
     }
 
     public void Add(CustomListObj<Key, T> value)
@@ -3104,6 +3105,22 @@ public class CustomList<Key, T>
         return false;
     }
 
+    public bool TryGetAdd(Key key, T val, out CustomListObj<Key, T> value)
+    {
+        foreach (CustomListObj<Key, T> item in List)
+        {
+            if (item.key.Equals(key))
+            {
+                value = item;
+                return true;
+            }
+        }
+
+        value = Add(key, val);
+        return false;
+    }
+
+
     public T GetRandom()
     {
         return List.GetRandomShuffled().value;
@@ -3118,6 +3135,8 @@ public class CustomList<Key, T>
 	 */
 
     public void Shuffle() => List.Shuffle();
+
+    public void ForEach(Action<CustomListObj<Key, T>> action) => List.ForEach(action);
 }
 
 [Serializable]
