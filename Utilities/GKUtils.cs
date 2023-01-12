@@ -17,8 +17,20 @@ using UnityEngine.UI;
 
 public static class GKUtils
 {
+    public static bool Button(this GUILayout gUILayout, string buttonName)
+    {
+        return false;
+    }
+    public static void CursorHide(this bool _toHide)
+    {
+        Cursor.visible = _toHide;
+    }
 
-    
+    public static void CursorLockMode(this CursorLockMode _lockMode)
+    {
+        Cursor.lockState = _lockMode;
+    }
+
     public static Vector3 Sc(this GameObject rectTransform)
     {
         return Camera.main.ScreenToWorldPoint(rectTransform.transform.position);

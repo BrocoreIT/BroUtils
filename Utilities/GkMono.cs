@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.VisualScripting;
 using UnityEngine.UIElements;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -19,7 +18,7 @@ public class GkMono : MonoBehaviour
             item.SetActive(value);
         }
     }
-
+    #region EDITOR
 #if UNITY_EDITOR
     protected void DrawGizmoLables(string message)
     {
@@ -119,3 +118,5 @@ public static class GizmoExtentions
 #endif
 
 }
+
+#endregion
