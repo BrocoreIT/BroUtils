@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioConductor : Singleton<AudioConductor>
+public class AudioConductor : BroSingleton<AudioConductor>
 { 
     
     [Tooltip("PreWarm")]

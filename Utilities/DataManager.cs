@@ -9,7 +9,7 @@ using UnityEngine;
 ///  public static DataExample DataExample => Instance.dataExample;
 /// </summary>
 
-public class DataManager : Singleton<DataManager>
+public class DataManager : BroSingleton<DataManager>
 {
     [SerializeField]
     private GameData gameData;

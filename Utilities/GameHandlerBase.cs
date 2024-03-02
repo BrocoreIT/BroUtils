@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameHandlerBase<T> : Singleton<T> where T : Component
+public class GameHandlerBase<T> : BroSingleton<T> where T : Component
 {
     public GameData GameData;
     public Cheats Cheats;

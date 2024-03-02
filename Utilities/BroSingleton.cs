@@ -5,7 +5,7 @@ using UnityEngine;
 /// Base singelton class.
 /// with option (DoNotDestroy, can be set in inspector) to make it persistant using DontDestroyOnLoad
 /// </summary>
-public class Singleton<T> : BroMono where T : Component
+public class BroSingleton<T> : BroMono where T : Component
 {
     public bool DoNotDestroy;
     private static T instance;
