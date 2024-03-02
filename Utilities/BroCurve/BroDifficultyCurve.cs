@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="DifficultyCurve",menuName ="Data/DiffcultyuCurve")]
-public class GkDifficultyCurve : ScriptableObject
+public class BroDifficultyCurve : ScriptableObject
 {
-    public GkCurve difficultyCurve;
-    public GkCurve playerProgression;
+    public BroCurve difficultyCurve;
+    public BroCurve playerProgression;
 
     public CustomList<string, LevelCurves> LevelCurves;
 
 
-    public CustomList<string, GkCurve> BattlersCurve;
+    public CustomList<string, BroCurve> BattlersCurve;
 
     public LevelCurves GetLevelCurves(float val)
     {
@@ -27,7 +27,7 @@ public class GkDifficultyCurve : ScriptableObject
         return null;
     }
 
-    public GkCurve GetLevelCurve(float val)
+    public BroCurve GetLevelCurve(float val)
     {
         var lCurves = GetLevelCurves(val);
 
@@ -44,7 +44,7 @@ public class GkDifficultyCurve : ScriptableObject
     {
         var clamped = Mathf.Clamp(value, ToMin, ToMax);
         var maped = value.Map(FromMin, FromMax, ToMin, ToMax);
-        GKUtils.Log("Map Test", $"{value} is now:\nClamped : {clamped} \nMaped : {maped} \n from :: {FromMin} : {FromMax} \n-> to :: {ToMin} : {ToMax}");
+        BroUtils.Log("Map Test", $"{value} is now:\nClamped : {clamped} \nMaped : {maped} \n from :: {FromMin} : {FromMax} \n-> to :: {ToMin} : {ToMax}");
     }
 
 
@@ -57,7 +57,7 @@ public class GkDifficultyCurve : ScriptableObject
 public class LevelCurves
 {
     public Vector2 range;
-    public List<GkCurve> gkCurves;
+    public List<BroCurve> gkCurves;
 
     
     public bool CheckInRange(float val)

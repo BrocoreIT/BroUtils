@@ -4,7 +4,7 @@ using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-public class GkGrid<T> : MonoBehaviour
+public class BroGrid<T> : MonoBehaviour
 {
     public RectInt GridDimentions;
     public float cellSize;
@@ -29,7 +29,7 @@ public class GkGrid<T> : MonoBehaviour
             return origin;
         }
     }
-    public GKGridObject<T> Grid;
+    public BroGridObject<T> Grid;
 
     public bool UpdateGrid;
 
@@ -42,7 +42,7 @@ public class GkGrid<T> : MonoBehaviour
     }
     public void CreateGrid()
     {
-        Grid = new GKGridObject<T>(GridDimentions.width, GridDimentions.height, cellSize, Origin, InitGrid);
+        Grid = new BroGridObject<T>(GridDimentions.width, GridDimentions.height, cellSize, Origin, InitGrid);
     }
     private T InitGrid()
     {

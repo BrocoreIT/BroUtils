@@ -13,7 +13,7 @@ public class GameData : ScriptableObject
     [SerializeField]
     private bool hasLight;
 
-    public DataBank<int, GkCurve> levelCurves;
+    public DataBank<int, BroCurve> levelCurves;
 
     public bool isRestart;
 
@@ -81,7 +81,7 @@ public class Cheats
 
     public void Log(CheatCodes cheat, bool status, string value)
     {
-        GKUtils.Log(cheat.ToString(), $"satus : {status} \n Value : {value}");
+        BroUtils.Log(cheat.ToString(), $"satus : {status} \n Value : {value}");
     }
 }
 

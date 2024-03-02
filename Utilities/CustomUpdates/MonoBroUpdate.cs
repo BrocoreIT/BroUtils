@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonoGKUpdate : MonoBehaviour
+public class MonoBroUpdate : MonoBehaviour
 {
     public Action OnUpdate;
 

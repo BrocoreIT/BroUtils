@@ -7,7 +7,7 @@ using UnityEditor;
 #endif
 
 [Serializable]
-public class GKGridObject<T>
+public class BroGridObject<T>
 {
     public RectInt GridDimentions;
     public float CellSize;
@@ -24,7 +24,7 @@ public class GKGridObject<T>
     public T[,] GridArray { get => gridArray; set => gridArray = value; }
     public Vector3 Origin { get => origin; set => origin = value; }
 
-    public GKGridObject (int width,int height, float cellSize, Vector2Int originPos, Func<T> createGridObj)
+    public BroGridObject (int width,int height, float cellSize, Vector2Int originPos, Func<T> createGridObj)
     {
         SetGridDimentions(width, height, cellSize, originPos);
         for (int x = 0; x < GridArray.GetLength(0); x++)
@@ -224,7 +224,7 @@ public class GKGridObject<T>
 
             for (int y = 0; y < GridArray.GetLength(1); y++)
             {
-                textMeshes[x,y] = GKUtils.CreateWorldText(GridArray[x, y].ToString(), null, GetWorldPosOffset(x, y), 20, Color.white, TextAnchor.MiddleCenter);
+                textMeshes[x,y] = BroUtils.CreateWorldText(GridArray[x, y].ToString(), null, GetWorldPosOffset(x, y), 20, Color.white, TextAnchor.MiddleCenter);
                 Debug.DrawLine(GetWorldPos(x, y), GetWorldPos(x, y + 1), Color.black, 100);
                 Debug.DrawLine(GetWorldPos(x, y), GetWorldPos(x + 1, y), Color.black, 100);
             }

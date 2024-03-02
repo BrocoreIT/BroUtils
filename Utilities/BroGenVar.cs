@@ -6,7 +6,7 @@ using UnityEngine;
 public delegate Action<float> Authoured(int diff);
 
 [System.Serializable]
-public class GKGeneratedVariable<T> 
+public class BroGenVar<T> 
 {
 
     public GenerationType generationType;

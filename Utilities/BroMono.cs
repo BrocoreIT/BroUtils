@@ -5,11 +5,11 @@ using UnityEngine.UIElements;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-public class GkMono : MonoBehaviour
+public class BroMono : MonoBehaviour
 {
     public void Log(string message)
     {
-        GKUtils.Log(gameObject.name, message);
+        BroUtils.Log(gameObject.name, message);
     }
     public void SetList(List<GameObject> gameObjects, bool value)
     {

@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [CreateAssetMenu(fileName="GkCurve",menuName="Data/GkCurves")]
-public class GkCurve : ScriptableObject
+public class BroCurve : ScriptableObject
 {
   
     [Header("Description")]

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class GkUpdate 
+public class BroUpdate 
 {
   
-    private static List<GkUpdate> updaterList; // Holds a reference to all active updaters
+    private static List<BroUpdate> updaterList; // Holds a reference to all active updaters
     private static GameObject initGameObject; // Global game object used for initializing class, is destroyed on scene change
 
     private static void InitIfNeeded()
@@ -14,39 +14,39 @@ public class GkUpdate
         if (initGameObject == null)
         {
             initGameObject = new GameObject("GkUpdate _Global");
-            updaterList = new List<GkUpdate>();
+            updaterList = new List<BroUpdate>();
         }
     }
 
 
 
 
-    public static GkUpdate Create(Action updateFunc)
+    public static BroUpdate Create(Action updateFunc)
     {
         return Create(() => { updateFunc(); return false; }, "", true, false);
     }
 
-    public static GkUpdate Create(Action updateFunc, string functionName)
+    public static BroUpdate Create(Action updateFunc, string functionName)
     {
         return Create(() => { updateFunc(); return false; }, functionName, true, false);
     }
 
-    public static GkUpdate Create(Func<bool> updateFunc)
+    public static BroUpdate Create(Func<bool> updateFunc)
     {
         return Create(updateFunc, "", true, false);
     }
 
-    public static GkUpdate Create(Func<bool> updateFunc, string functionName)
+    public static BroUpdate Create(Func<bool> updateFunc, string functionName)
     {
         return Create(updateFunc, functionName, true, false);
     }
 
-    public static GkUpdate Create(Func<bool> updateFunc, string functionName, bool active)
+    public static BroUpdate Create(Func<bool> updateFunc, string functionName, bool active)
     {
         return Create(updateFunc, functionName, active, false);
     }
 
-    public static GkUpdate Create(Func<bool> updateFunc, string functionName, bool active, bool stopAllWithSameName)
+    public static BroUpdate Create(Func<bool> updateFunc, string functionName, bool active, bool stopAllWithSameName)
     {
         InitIfNeeded();
 
@@ -55,22 +55,22 @@ public class GkUpdate
             StopAllUpdatersWithName(functionName);
         }
 
-        GameObject gameObject = new GameObject("GkUpdate  Object " + functionName, typeof(MonoGKUpdate));
+        GameObject gameObject = new GameObject("GkUpdate  Object " + functionName, typeof(MonoBroUpdate));
         gameObject.transform.SetParent(initGameObject.transform);
-        GkUpdate GkUpdate = new GkUpdate(gameObject, updateFunc, functionName, active);
-        gameObject.GetComponent<MonoGKUpdate>().OnUpdate = GkUpdate.Update;
+        BroUpdate GkUpdate = new BroUpdate(gameObject, updateFunc, functionName, active);
+        gameObject.GetComponent<MonoBroUpdate>().OnUpdate = GkUpdate.Update;
 
         updaterList.Add(GkUpdate);
         return GkUpdate;
     }
 
-    private static void RemoveUpdater(GkUpdate funcUpdater)
+    private static void RemoveUpdater(BroUpdate funcUpdater)
     {
         InitIfNeeded();
         updaterList.Remove(funcUpdater);
     }
 
-    public static void DestroyUpdater(GkUpdate funcUpdater)
+    public static void DestroyUpdater(BroUpdate funcUpdater)
     {
         InitIfNeeded();
         if (funcUpdater != null)
@@ -114,7 +114,7 @@ public class GkUpdate
     private bool active;
     private Func<bool> updateFunc; // Destroy Updater if return true;
 
-    public GkUpdate(GameObject gameObject, Func<bool> updateFunc, string functionName, bool active)
+    public BroUpdate(GameObject gameObject, Func<bool> updateFunc, string functionName, bool active)
     {
         this.gameObject = gameObject;
         this.updateFunc = updateFunc;

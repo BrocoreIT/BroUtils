@@ -15,7 +15,7 @@ using UnityEngine.UI;
 /// Extentions For easy development.
 /// </summary>
 
-public static class GKUtils
+public static class BroUtils
 {
     public static bool Button(this GUILayout gUILayout, string buttonName)
     {
@@ -1039,10 +1039,10 @@ public static class GKUtils
  */
 
     // Creates a Text Mesh in the World and constantly updates it
-    public static GkUpdate CreateWorldTextUpdater(Func<string> GetTextFunc, Vector3 localPosition, Transform parent = null, int fontSize = 40, Color? color = null, TextAnchor textAnchor = TextAnchor.UpperLeft, TextAlignment textAlignment = TextAlignment.Left, int sortingOrder = sortingOrderDefault)
+    public static BroUpdate CreateWorldTextUpdater(Func<string> GetTextFunc, Vector3 localPosition, Transform parent = null, int fontSize = 40, Color? color = null, TextAnchor textAnchor = TextAnchor.UpperLeft, TextAlignment textAlignment = TextAlignment.Left, int sortingOrder = sortingOrderDefault)
     {
         TextMesh textMesh = CreateWorldText(GetTextFunc(), parent, localPosition, fontSize, color, textAnchor, textAlignment, sortingOrder);
-        return GkUpdate.Create(() =>
+        return BroUpdate.Create(() =>
         {
             textMesh.text = GetTextFunc();
             return false;
@@ -1085,7 +1085,7 @@ public static class GKUtils
         TextMesh textMesh = CreateWorldText(parent, text, localPosition, fontSize, color, TextAnchor.LowerLeft, TextAlignment.Left, sortingOrderDefault);
         Transform transform = textMesh.transform;
         Vector3 moveAmount = (finalPopupPosition - localPosition) / popupTime;
-        GkUpdate.Create(delegate ()
+        BroUpdate.Create(delegate ()
         {
             transform.position += moveAmount * Time.unscaledDeltaTime;
             popupTime -= Time.unscaledDeltaTime;
@@ -1102,10 +1102,10 @@ public static class GKUtils
     }
 
     // Create Text Updater in UI
-    public static GkUpdate CreateUITextUpdater(Func<string> GetTextFunc, Vector2 anchoredPosition)
+    public static BroUpdate CreateUITextUpdater(Func<string> GetTextFunc, Vector2 anchoredPosition)
     {
         Text text = DrawTextUI(GetTextFunc(), anchoredPosition, 20, GetDefaultFont());
-        return GkUpdate.Create(() =>
+        return BroUpdate.Create(() =>
         {
             text.text = GetTextFunc();
             return false;
@@ -1466,15 +1466,15 @@ public static class GKUtils
         return Quaternion.Euler(0, angle, 0) * vec;
     }
 
-    public static GkUpdate CreateMouseDraggingAction(Action<Vector3> onMouseDragging)
+    public static BroUpdate CreateMouseDraggingAction(Action<Vector3> onMouseDragging)
     {
         return CreateMouseDraggingAction(0, onMouseDragging);
     }
 
-    public static GkUpdate CreateMouseDraggingAction(int mouseButton, Action<Vector3> onMouseDragging)
+    public static BroUpdate CreateMouseDraggingAction(int mouseButton, Action<Vector3> onMouseDragging)
     {
         bool dragging = false;
-        return GkUpdate.Create(() =>
+        return BroUpdate.Create(() =>
         {
             if (Input.GetMouseButtonDown(mouseButton))
             {
@@ -1492,16 +1492,16 @@ public static class GKUtils
         });
     }
 
-    public static GkUpdate CreateMouseClickFromToAction(Action<Vector3, Vector3> onMouseClickFromTo, Action<Vector3, Vector3> onWaitingForToPosition)
+    public static BroUpdate CreateMouseClickFromToAction(Action<Vector3, Vector3> onMouseClickFromTo, Action<Vector3, Vector3> onWaitingForToPosition)
     {
         return CreateMouseClickFromToAction(0, 1, onMouseClickFromTo, onWaitingForToPosition);
     }
 
-    public static GkUpdate CreateMouseClickFromToAction(int mouseButton, int cancelMouseButton, Action<Vector3, Vector3> onMouseClickFromTo, Action<Vector3, Vector3> onWaitingForToPosition)
+    public static BroUpdate CreateMouseClickFromToAction(int mouseButton, int cancelMouseButton, Action<Vector3, Vector3> onMouseClickFromTo, Action<Vector3, Vector3> onWaitingForToPosition)
     {
         int state = 0;
         Vector3 from = Vector3.zero;
-        return GkUpdate.Create(() =>
+        return BroUpdate.Create(() =>
         {
             if (state == 1)
             {
@@ -1529,14 +1529,14 @@ public static class GKUtils
         });
     }
 
-    public static GkUpdate CreateMouseClickAction(Action<Vector3> onMouseClick)
+    public static BroUpdate CreateMouseClickAction(Action<Vector3> onMouseClick)
     {
         return CreateMouseClickAction(0, onMouseClick);
     }
 
-    public static GkUpdate CreateMouseClickAction(int mouseButton, Action<Vector3> onMouseClick)
+    public static BroUpdate CreateMouseClickAction(int mouseButton, Action<Vector3> onMouseClick)
     {
-        return GkUpdate.Create(() =>
+        return BroUpdate.Create(() =>
         {
             if (Input.GetMouseButtonDown(mouseButton))
             {
@@ -1546,9 +1546,9 @@ public static class GKUtils
         });
     }
 
-    public static GkUpdate CreateKeyCodeAction(KeyCode keyCode, Action onKeyDown)
+    public static BroUpdate CreateKeyCodeAction(KeyCode keyCode, Action onKeyDown)
     {
-        return GkUpdate.Create(() =>
+        return BroUpdate.Create(() =>
         {
             if (Input.GetKeyDown(keyCode))
             {
@@ -1614,7 +1614,7 @@ public static class GKUtils
     public static void ShakeCamera(float intensity, float timer)
     {
         Vector3 lastCameraMovement = Vector3.zero;
-        GkUpdate.Create(delegate ()
+        BroUpdate.Create(delegate ()
         {
             timer -= Time.unscaledDeltaTime;
             Vector3 randomMovement = new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)).normalized * intensity;
@@ -1625,9 +1625,9 @@ public static class GKUtils
     }
 
     // Trigger an action next frame
-    public static GkUpdate ActionNextFrame(Action action)
+    public static BroUpdate ActionNextFrame(Action action)
     {
-        return GkUpdate.Create(() =>
+        return BroUpdate.Create(() =>
         {
             action();
             return true;
